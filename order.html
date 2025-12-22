@@ -91,15 +91,30 @@
       .logo img{ height: 56px; }
     }
 
-    @media (max-width: 480px){
+    @media (max-width: 480px) {
       .nav{
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
+        gap: 10px;
+        padding: 10px 0;
       }
+
+      .logo img{
+        height: 48px; /* было 56/80 — сделаем компактнее */
+      }
+
       .menu{
         width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 14px;
         justify-content: flex-start;
+        line-height: 1.2;
+      }
+
+      .menu a{
+        font-size: 14px;
+        padding: 6px 0; /* чтобы попадать пальцем было проще */
       }
     }
 
@@ -241,6 +256,51 @@
         background: #fff;
       }
     }
+
+    /* ===== Мобильный пресет: ТОЛЬКО ТЕЛЕФОН ===== */
+    @media (max-width: 480px){
+
+      /* Форма заказа компактнее */
+      main {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      .order-container {
+        padding: 20px 12px;
+        max-width: 100%;
+      }
+
+      h2 {
+        font-size: 20px;
+        margin-bottom: 16px;
+      }
+
+      .form-group {
+        gap: 6px;
+      }
+
+      input, select, textarea {
+        padding: 12px 14px;
+        font-size: 16px;
+      }
+
+      button.primary {
+        padding: 14px 20px;
+        font-size: 16px;
+      }
+
+      .form-note {
+        font-size: 11px;
+        margin-top: 12px;
+      }
+
+      /* Footer чуть компактнее */
+      footer {
+        padding: 16px 0 20px;
+        font-size: 13px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -271,7 +331,7 @@
           <div class="form-group">
             <label for="itemInput">Выбранный товар</label>
             <select id="itemInput" name="item" required>
-              <option value="" disabled selected>Выберите товар</option>
+              <option value="" disabled selected>Выбрать</option>
               <option value="Чёрная футболка">Чёрная футболка</option>
               <option value="Бежевая футболка">Бежевая футболка</option>
               <option value="Зелёная футболка">Зелёная футболка</option>
@@ -295,7 +355,7 @@
             <div class="form-group">
               <label for="sizeSelect">Размер</label>
               <select name="size" id="sizeSelect" required>
-                <option value="" disabled selected>Выберите размер</option>
+                <option value="" disabled selected>Выбрать</option>
                 <option value="XS">XS</option>
                 <option value="S">S</option>
                 <option value="M">M</option>
@@ -363,3 +423,4 @@
   </script>
 </body>
 </html>
+
