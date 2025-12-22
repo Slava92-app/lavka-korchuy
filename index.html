@@ -73,15 +73,30 @@
       .logo img{ height: 56px; }
     }
 
-    @media (max-width: 480px){
+    @media (max-width: 480px) {
       .nav{
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
+        gap: 10px;
+        padding: 10px 0;
       }
+
+      .logo img{
+        height: 48px; /* было 56/80 — сделаем компактнее */
+      }
+
       .menu{
         width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 14px;
         justify-content: flex-start;
+        line-height: 1.2;
+      }
+
+      .menu a{
+        font-size: 14px;
+        padding: 6px 0; /* чтобы попадать пальцем было проще */
       }
     }
 
@@ -165,22 +180,18 @@
       box-sizing: border-box;
     }
     
-    .product-image {
+    .product-image{
       width: 100%;
-      height: 360px; /* сохраняем высоту */
-      margin: 0;
-      padding: 0;
-      line-height: 0; /* убираем зазор под изображением */
+      height: auto;              /* важное */
+      aspect-ratio: 4 / 5;       /* пропорции карточки */
+      line-height: 0;
     }
     
-    .product-image img {
+    .product-image img{
       width: 100%;
       height: 100%;
-      object-fit: contain; /* сохраняем оригинальный размер изображения */
+      object-fit: contain;         /* витринный вид */
       display: block;
-      margin: 0;
-      padding: 0;
-      transition: transform 0.3s ease;
     }
 
     /* Zoom link (open full-size image) */
@@ -211,7 +222,7 @@
     .price {
       font-weight: bold;
       text-align: center;
-      margin: 30px 0 20px;
+      margin: 20px 0 10px;
       color: #111;
       font-size: 16px;
     }
@@ -340,6 +351,68 @@
 
     footer a {
       color: #555;
+    }
+
+    /* ===== Мобильный пресет: ТОЛЬКО ТЕЛЕФОН ===== */
+    @media (max-width: 480px){
+
+      /* Хедер компактнее */
+      .nav{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 0;
+      }
+
+      .logo img{
+        height: 48px;
+      }
+
+      .menu{
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 10px 14px;
+        justify-content: flex-start;
+      }
+
+      .menu a{
+        font-size: 14px;
+        padding: 6px 0;
+      }
+
+      /* Карточка товара — витринный мобильный вид */
+      .product-card{
+        width: 100%;
+      }
+
+      .product-image{
+        aspect-ratio: 4 / 5;
+        height: auto;
+      }
+
+      .product-image img{
+        object-fit: cover;
+      }
+
+      .price{
+        margin: 12px 0 8px;
+        font-size: 15px;
+      }
+
+      .buy-btn{
+        margin: 10px auto;
+        padding: 10px 18px;
+        font-size: 15px;
+      }
+
+      /* Секции чуть компактнее */
+      .hero{
+        padding: 12px 0 16px;
+      }
+
+      .products{
+        padding: 18px 0 24px;
+      }
     }
   </style>
 </head>
