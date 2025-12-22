@@ -354,64 +354,43 @@
     }
 
     /* ===== Мобильный пресет: ТОЛЬКО ТЕЛЕФОН ===== */
-    @media (max-width: 480px){
-
-      /* Хедер компактнее */
-      .nav{
+    @media (max-width: 480px) {
+      /* 1) Шапка: делаем колонкой и центрируем */
+      .nav {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        justify-content: center;
         gap: 10px;
         padding: 10px 0;
       }
 
-      .logo img{
-        height: 48px;
-      }
-
-      .menu{
+      /* 2) Логотип по центру */
+      .logo {
         width: 100%;
-        flex-wrap: wrap;
-        gap: 10px 14px;
-        justify-content: flex-start;
+        display: flex;
+        justify-content: center;
       }
 
-      .menu a{
+      /* 3) Увеличиваем лого примерно в 1.5 раза */
+      .logo img {
+        height: 72px;     /* было ~48/56 на мобиле — это примерно x1.5 */
+        max-width: 90vw;  /* чтобы точно не вылезало за экран */
+      }
+
+      /* 4) Меню: перенос, центр, чтобы ничего не уезжало */
+      .menu {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 14px;
+        padding-bottom: 6px;
+      }
+
+      .menu a {
+        white-space: nowrap;
         font-size: 14px;
         padding: 6px 0;
-      }
-
-      /* Карточка товара — витринный мобильный вид */
-      .product-card{
-        width: 100%;
-      }
-
-      .product-image{
-        aspect-ratio: 4 / 5;
-        height: auto;
-      }
-
-      .product-image img{
-        object-fit: cover;
-      }
-
-      .price{
-        margin: 12px 0 8px;
-        font-size: 15px;
-      }
-
-      .buy-btn{
-        margin: 10px auto;
-        padding: 10px 18px;
-        font-size: 15px;
-      }
-
-      /* Секции чуть компактнее */
-      .hero{
-        padding: 12px 0 16px;
-      }
-
-      .products{
-        padding: 18px 0 24px;
       }
     }
   </style>
@@ -487,6 +466,9 @@
             </div>
           </div>
 
+          <!-- Стрелки для навигации -->
+          <div class="gallery-arrow gallery-arrow--left">←</div>
+          <div class="gallery-arrow gallery-arrow--right">→</div>
           
         </div>
 
@@ -577,21 +559,6 @@
 
       if (prevBtn) prevBtn.addEventListener('click', () => grid.scrollBy({left: -cardWidth(), behavior: 'smooth'}));
       if (nextBtn) nextBtn.addEventListener('click', () => grid.scrollBy({left: cardWidth(), behavior: 'smooth'}));
-
-      // Автоматический скроллинг
-      let autoScroll = setInterval(() => {
-        grid.scrollBy({left: cardWidth(), behavior: 'smooth'});
-      }, 3000);
-
-      // Остановить при наведении
-      wrapper.addEventListener('mouseenter', () => clearInterval(autoScroll));
-
-      // Возобновить при уходе мыши
-      wrapper.addEventListener('mouseleave', () => {
-        autoScroll = setInterval(() => {
-          grid.scrollBy({left: cardWidth(), behavior: 'smooth'});
-        }, 3000);
-      });
     });
   </script>
 </body>
