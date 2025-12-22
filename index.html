@@ -263,6 +263,7 @@
       font-size: 18px;
       padding: 0;
       opacity: 0.9;
+      display: none; /* Скрыты по умолчанию */
     }
     
     .gallery-arrow:hover {
@@ -391,6 +392,14 @@
         white-space: nowrap;
         font-size: 14px;
         padding: 6px 0;
+      }
+
+      /* Стрелки для галереи на мобильных */
+      .gallery-arrow {
+        display: block;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
       }
     }
   </style>
@@ -525,6 +534,9 @@
               </div>
             </div>
 
+            <!-- Стрелки для навигации -->
+            <div class="gallery-arrow gallery-arrow--left">←</div>
+            <div class="gallery-arrow gallery-arrow--right">→</div>
             
           </div>
 
