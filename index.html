@@ -7,6 +7,7 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html, body { max-width: 100%; overflow-x: hidden; }
+
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -82,7 +83,7 @@
       }
 
       .logo img{
-        height: 48px; /* было 56/80 — сделаем компактнее */
+        height: 48px;
       }
 
       .menu{
@@ -96,7 +97,7 @@
 
       .menu a{
         font-size: 14px;
-        padding: 6px 0; /* чтобы попадать пальцем было проще */
+        padding: 6px 0;
       }
     }
 
@@ -105,8 +106,6 @@
       padding: 20px 0 28px;
       text-align: center;
     }
-    
-
 
     .hero-logo {
       max-width: 100px;
@@ -132,11 +131,11 @@
       margin: 20px auto 0;
     }
 
-    /* PRODUCTS – фото впритык друг к другу */
+    /* PRODUCTS */
     .products {
       padding: 24px 0 32px;
     }
-    
+
     .products h2 {
       font-size: 24px;
       margin-bottom: 16px;
@@ -146,75 +145,52 @@
       position: relative;
     }
 
-    /* лента без отступов */
     .product-grid {
       display: flex;
-      gap: 0px; 
+      gap: 0px;
       overflow-x: auto;
       scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       padding: 4px 0 12px;
     }
-    
+
     .product-grid::-webkit-scrollbar {
       height: 6px;
     }
-    
+
     .product-grid::-webkit-scrollbar-thumb {
       background: #ccc;
       border-radius: 999px;
     }
 
-    /* карточка без отступов */
     .product-card {
       flex: 0 0 auto;
-      width: 33.333%; /* точно 3 колонки без учета gap */
+      width: 33.333%;
       position: relative;
       scroll-snap-align: start;
       border-radius: 0;
       overflow: hidden;
-      margin: 0; /* убираем любые возможные отступы */
+      margin: 0;
       padding: 0;
       border: none;
       box-sizing: border-box;
     }
-    
+
     .product-image{
       width: 100%;
-      height: auto;              /* важное */
-      aspect-ratio: 4 / 5;       /* пропорции карточки */
+      height: auto;
+      aspect-ratio: 4 / 5;
       line-height: 0;
     }
-    
+
     .product-image img{
       width: 100%;
       height: 100%;
-      object-fit: contain;         /* витринный вид */
+      object-fit: contain;
       display: block;
     }
 
-    /* Zoom link (open full-size image) */
-    .zoom-link {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 32px;
-      height: 32px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid #ddd;
-      border-radius: 50%;
-      text-decoration: none;
-      color: #111;
-      font-size: 16px;
-      z-index: 6;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    }
-    .zoom-link:hover { background: #fff }
-    
     .product-image img:hover {
       transform: scale(1.08);
     }
@@ -245,102 +221,66 @@
       background: #333;
     }
 
-    /* стрелки */
-    .gallery-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      border: none;
-      background: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 5;
-      font-size: 20px;
-      padding: 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      display: none; /* Скрыты по умолчанию */
+    /* ===== СТРЕЛКИ ГАЛЕРЕИ ===== */
+    /* по умолчанию скрыты (десктоп/планшеты) */
+    .gallery-arrow{
+      display: none;
     }
-    
-    .gallery-arrow:hover {
-      opacity: 1;
-    }
-    
-    .gallery-arrow--left {
-      left: -8px;
-    }
-    
-    .gallery-arrow--right {
-      right: -8px;
+
+    /* Мобилка: аккуратные стрелки в стиле сайта */
+    @media (max-width: 480px){
+      .gallery-arrow{
+        display: inline-flex;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        width: 36px;
+        height: 36px;
+
+        border-radius: 999px;
+        border: 1px solid rgba(17,17,17,0.12);
+        background: rgba(255,255,255,0.85);
+        backdrop-filter: blur(6px);
+
+        align-items: center;
+        justify-content: center;
+
+        color: #111;
+        font-size: 22px;
+        line-height: 1;
+
+        cursor: pointer;
+        z-index: 6;
+        padding: 0;
+
+        box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+        opacity: 0.92;
+
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .gallery-arrow:active{
+        transform: translateY(-50%) scale(0.96);
+      }
+
+      .gallery-arrow--left{ left: 8px; }
+      .gallery-arrow--right{ right: 8px; }
+
+      .gallery-arrow::before{
+        content:"";
+        position:absolute;
+        inset:-10px;
+      }
     }
 
     @media (max-width: 768px) {
-      .product-card {
-        width: 50%; /* точно 2 колонки */
-      }
-      .gallery-arrow--left {
-        left: 4px;
-      }
-      .gallery-arrow--right {
-        right: 4px;
-      }
+      .product-card { width: 50%; }
     }
-    
+
     @media (max-width: 480px) {
-      .product-card {
-        width: 100%; /* 1 колонка */
-      }
-    }
-
-    /* ORDER */
-    .order {
-      padding: 24px 0 40px;
-      border-top: 1px solid #ddd;
-    }
-
-    .order h2 {
-      font-size: 24px;
-      margin-bottom: 12px;
-    }
-
-    form {
-      display: grid;
-      gap: 12px;
-      max-width: 500px;
-    }
-
-    label {
-      font-size: 14px;
-      color: #444;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font: inherit;
-      box-sizing: border-box;
-    }
-
-    button.primary {
-      margin-top: 8px;
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: none;
-      background: #111;
-      color: #fff;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    button.primary:hover {
-      opacity: 0.9;
+      .product-card { width: 100%; }
     }
 
     /* FOOTER */
@@ -357,7 +297,6 @@
 
     /* ===== Мобильный пресет: ТОЛЬКО ТЕЛЕФОН ===== */
     @media (max-width: 480px) {
-      /* 1) Шапка: делаем колонкой и центрируем */
       .nav {
         flex-direction: column;
         align-items: center;
@@ -366,20 +305,17 @@
         padding: 10px 0;
       }
 
-      /* 2) Логотип по центру */
       .logo {
         width: 100%;
         display: flex;
         justify-content: center;
       }
 
-      /* 3) Увеличиваем лого примерно в 1.5 раза */
       .logo img {
-        height: 72px;     /* было ~48/56 на мобиле — это примерно x1.5 */
-        max-width: 90vw;  /* чтобы точно не вылезало за экран */
+        height: 72px;
+        max-width: 90vw;
       }
 
-      /* 4) Меню: перенос, центр, чтобы ничего не уезжало */
       .menu {
         width: 100%;
         display: flex;
@@ -393,14 +329,6 @@
         white-space: nowrap;
         font-size: 14px;
         padding: 6px 0;
-      }
-
-      /* Стрелки для галереи на мобильных */
-      .gallery-arrow {
-        display: block;
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
       }
     }
   </style>
@@ -434,119 +362,90 @@
         <h2>Футболки</h2>
 
         <div class="gallery-wrapper">
-          
 
-          <!-- лента карточек -->
+          <!-- стрелки (видны только на мобиле по CSS) -->
+          <button class="gallery-arrow gallery-arrow--left" type="button" aria-label="Назад">‹</button>
+          <button class="gallery-arrow gallery-arrow--right" type="button" aria-label="Вперёд">›</button>
+
           <div class="product-grid">
-            <!-- 1. Футболка -->
             <div class="product-card">
               <div class="product-image">
                 <a href="img/tshirt1.jpg" target="_blank">
                   <img src="img/tshirt1.jpg" alt="Чёрная футболка"/>
                 </a>
-                
               </div>
               <p class="price">1999 руб.</p>
               <a class="buy-btn" href="order.html?item=Чёрная%20футболка">Купить</a>
             </div>
 
-
-            <!-- 3. Футболка -->
             <div class="product-card">
               <div class="product-image">
                 <a href="img/tshirt2.jpg" target="_blank">
                   <img src="img/tshirt2.jpg" alt="Бежевая футболка"/>
                 </a>
-                
               </div>
               <p class="price">1999 руб.</p>
               <a class="buy-btn" href="order.html?item=Бежевая%20футболка">Купить</a>
             </div>
 
-            <!-- 4. Футболка -->
             <div class="product-card">
               <div class="product-image">
                 <a href="img/tshirt3.jpg" target="_blank">
                   <img src="img/tshirt3.jpg" alt="Зелёная футболка"/>
                 </a>
-                
               </div>
               <p class="price">2299 руб.</p>
               <a class="buy-btn" href="order.html?item=Зелёная%20футболка">Купить</a>
             </div>
           </div>
-
-          <!-- Стрелки для навигации -->
-          <div class="gallery-arrow gallery-arrow--left">←</div>
-          <div class="gallery-arrow gallery-arrow--right">→</div>
-          
         </div>
-
-        <p style="font-size: 12px; color:#777; margin-top:8px;">
-          
-        </p>
       </div>
     </section>
 
-      <!-- New Hoodie section (same design as Футболки) -->
-      <section class="products" id="hoodies">
-        <div class="container">
-          <h2>Худи</h2>
+    <section class="products" id="hoodies">
+      <div class="container">
+        <h2>Худи</h2>
 
-          <div class="gallery-wrapper">
-            
+        <div class="gallery-wrapper">
 
-            <!-- лента карточек -->
-            <div class="product-grid">
-              <!-- 1. Худи -->
-              <div class="product-card">
-                <div class="product-image">
-                  <a href="img/hoodie1.jpg" target="_blank">
-                    <img src="img/hoodie1.jpg" alt="Чёрное худи"/>
-                  </a>
-                  
-                </div>
-                <p class="price">3499 руб.</p>
-                <a class="buy-btn" href="order.html?item=Чёрное%20худи">Купить</a>
+          <!-- стрелки (видны только на мобиле по CSS) -->
+          <button class="gallery-arrow gallery-arrow--left" type="button" aria-label="Назад">‹</button>
+          <button class="gallery-arrow gallery-arrow--right" type="button" aria-label="Вперёд">›</button>
+
+          <div class="product-grid">
+            <div class="product-card">
+              <div class="product-image">
+                <a href="img/hoodie1.jpg" target="_blank">
+                  <img src="img/hoodie1.jpg" alt="Чёрное худи"/>
+                </a>
               </div>
-
-              <!-- 2. Худи -->
-              <div class="product-card">
-                <div class="product-image">
-                  <a href="img/hoodie2.jpg" target="_blank">
-                    <img src="img/hoodie2.jpg" alt="Бежевое худи"/>
-                  </a>
-                  
-                </div>
-                <p class="price">3499 руб.</p>
-                <a class="buy-btn" href="order.html?item=Бежевое%20худи">Купить</a>
-              </div>
-
-              <!-- 3. Худи -->
-              <div class="product-card">
-                <div class="product-image">
-                  <a href="img/hoodie3.jpg" target="_blank">
-                    <img src="img/hoodie3.jpg" alt="Зелёное худи"/>
-                  </a>
-                  
-                </div>
-                <p class="price">3999 руб.</p>
-                <a class="buy-btn" href="order.html?item=Зелёное%20худи">Купить</a>
-              </div>
+              <p class="price">3499 руб.</p>
+              <a class="buy-btn" href="order.html?item=Чёрное%20худи">Купить</a>
             </div>
 
-            <!-- Стрелки для навигации -->
-            <div class="gallery-arrow gallery-arrow--left">←</div>
-            <div class="gallery-arrow gallery-arrow--right"></div>
-            
-          </div>
+            <div class="product-card">
+              <div class="product-image">
+                <a href="img/hoodie2.jpg" target="_blank">
+                  <img src="img/hoodie2.jpg" alt="Бежевое худи"/>
+                </a>
+              </div>
+              <p class="price">3499 руб.</p>
+              <a class="buy-btn" href="order.html?item=Бежевое%20худи">Купить</a>
+            </div>
 
-          <p style="font-size: 12px; color:#777; margin-top:8px;">
-          
-          </p>
+            <div class="product-card">
+              <div class="product-image">
+                <a href="img/hoodie3.jpg" target="_blank">
+                  <img src="img/hoodie3.jpg" alt="Зелёное худи"/>
+                </a>
+              </div>
+              <p class="price">3999 руб.</p>
+              <a class="buy-btn" href="order.html?item=Зелёное%20худи">Купить</a>
+            </div>
+          </div>
         </div>
-      </section>
-    <!-- Order moved to a dedicated page: order.html -->
+      </div>
+    </section>
   </main>
 
   <footer id="contacts">
@@ -561,18 +460,56 @@
     </div>
   </footer>
 
-  <!-- немного JS для работы стрелок: поддержка нескольких галерей -->
   <script>
-    document.querySelectorAll('.gallery-wrapper').forEach(wrapper => {
-      const grid = wrapper.querySelector('.product-grid');
-      const prevBtn = wrapper.querySelector('.gallery-arrow--left');
-      const nextBtn = wrapper.querySelector('.gallery-arrow--right');
+  document.querySelectorAll('.gallery-wrapper').forEach(wrapper => {
+    const grid = wrapper.querySelector('.product-grid');
+    const prevBtn = wrapper.querySelector('.gallery-arrow--left');
+    const nextBtn = wrapper.querySelector('.gallery-arrow--right');
 
-      const cardWidth = () => grid.querySelector('.product-card')?.offsetWidth || 0;
+    if (!grid || !prevBtn || !nextBtn) return;
 
-      if (prevBtn) prevBtn.addEventListener('click', () => grid.scrollBy({left: -cardWidth(), behavior: 'smooth'}));
-      if (nextBtn) nextBtn.addEventListener('click', () => grid.scrollBy({left: cardWidth(), behavior: 'smooth'}));
+    const cardWidth = () =>
+      grid.querySelector('.product-card')?.offsetWidth || 0;
+
+    function updateArrows() {
+      const maxScroll =
+        grid.scrollWidth - grid.clientWidth - 2; // -2 для погрешности
+
+      // в начале — скрываем левую
+      if (grid.scrollLeft <= 1) {
+        prevBtn.style.visibility = 'hidden';
+      } else {
+        prevBtn.style.visibility = 'visible';
+      }
+
+      // в конце — скрываем правую
+      if (grid.scrollLeft >= maxScroll) {
+        nextBtn.style.visibility = 'hidden';
+      } else {
+        nextBtn.style.visibility = 'visible';
+      }
+    }
+
+    // клики по стрелкам
+    prevBtn.addEventListener('click', () => {
+      grid.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
     });
-  </script>
+
+    nextBtn.addEventListener('click', () => {
+      grid.scrollBy({ left: cardWidth(), behavior: 'smooth' });
+    });
+
+    // обновление при скролле пальцем
+    grid.addEventListener('scroll', updateArrows, { passive: true });
+
+    // обновление при ресайзе/повороте экрана
+    window.addEventListener('resize', updateArrows);
+
+    // первичная инициализация
+    updateArrows();
+  });
+</script>
+
 </body>
 </html>
+
