@@ -222,12 +222,8 @@
     }
 
     /* ===== СТРЕЛКИ ГАЛЕРЕИ ===== */
-    /* по умолчанию скрыты (десктоп/планшеты) */
-    .gallery-arrow{
-      display: none;
-    }
+    .gallery-arrow{ display: none; }
 
-    /* Мобилка: аккуратные стрелки в стиле сайта */
     @media (max-width: 480px){
       .gallery-arrow{
         display: inline-flex;
@@ -275,13 +271,8 @@
       }
     }
 
-    @media (max-width: 768px) {
-      .product-card { width: 50%; }
-    }
-
-    @media (max-width: 480px) {
-      .product-card { width: 100%; }
-    }
+    @media (max-width: 768px) { .product-card { width: 50%; } }
+    @media (max-width: 480px) { .product-card { width: 100%; } }
 
     /* FOOTER */
     footer {
@@ -293,6 +284,24 @@
 
     footer a {
       color: #555;
+    }
+
+    /* ===== FOOTER MOBILE CENTER (добавлено) ===== */
+    @media (max-width: 480px){
+      footer .container{
+        text-align: center;
+      }
+
+      /* чтобы строки в футере не слипались */
+      footer .container > div{
+        line-height: 1.6;
+      }
+
+      /* ссылки становятся аккуратными и кликабельными */
+      footer a{
+        display: inline-block;
+        margin: 0 6px;
+      }
     }
 
     /* ===== Мобильный пресет: ТОЛЬКО ТЕЛЕФОН ===== */
@@ -362,8 +371,6 @@
         <h2>Футболки</h2>
 
         <div class="gallery-wrapper">
-
-          <!-- стрелки (видны только на мобиле по CSS) -->
           <button class="gallery-arrow gallery-arrow--left" type="button" aria-label="Назад">‹</button>
           <button class="gallery-arrow gallery-arrow--right" type="button" aria-label="Вперёд">›</button>
 
@@ -407,8 +414,6 @@
         <h2>Худи</h2>
 
         <div class="gallery-wrapper">
-
-          <!-- стрелки (видны только на мобиле по CSS) -->
           <button class="gallery-arrow gallery-arrow--left" type="button" aria-label="Назад">‹</button>
           <button class="gallery-arrow gallery-arrow--right" type="button" aria-label="Вперёд">›</button>
 
@@ -461,55 +466,37 @@
   </footer>
 
   <script>
-  document.querySelectorAll('.gallery-wrapper').forEach(wrapper => {
-    const grid = wrapper.querySelector('.product-grid');
-    const prevBtn = wrapper.querySelector('.gallery-arrow--left');
-    const nextBtn = wrapper.querySelector('.gallery-arrow--right');
+    document.querySelectorAll('.gallery-wrapper').forEach(wrapper => {
+      const grid = wrapper.querySelector('.product-grid');
+      const prevBtn = wrapper.querySelector('.gallery-arrow--left');
+      const nextBtn = wrapper.querySelector('.gallery-arrow--right');
 
-    if (!grid || !prevBtn || !nextBtn) return;
+      if (!grid || !prevBtn || !nextBtn) return;
 
-    const cardWidth = () =>
-      grid.querySelector('.product-card')?.offsetWidth || 0;
+      const cardWidth = () =>
+        grid.querySelector('.product-card')?.offsetWidth || 0;
 
-    function updateArrows() {
-      const maxScroll =
-        grid.scrollWidth - grid.clientWidth - 2; // -2 для погрешности
+      function updateArrows() {
+        const maxScroll = grid.scrollWidth - grid.clientWidth - 2;
 
-      // в начале — скрываем левую
-      if (grid.scrollLeft <= 1) {
-        prevBtn.style.visibility = 'hidden';
-      } else {
-        prevBtn.style.visibility = 'visible';
+        prevBtn.style.visibility = (grid.scrollLeft <= 1) ? 'hidden' : 'visible';
+        nextBtn.style.visibility = (grid.scrollLeft >= maxScroll) ? 'hidden' : 'visible';
       }
 
-      // в конце — скрываем правую
-      if (grid.scrollLeft >= maxScroll) {
-        nextBtn.style.visibility = 'hidden';
-      } else {
-        nextBtn.style.visibility = 'visible';
-      }
-    }
+      prevBtn.addEventListener('click', () => {
+        grid.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
+      });
 
-    // клики по стрелкам
-    prevBtn.addEventListener('click', () => {
-      grid.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
+      nextBtn.addEventListener('click', () => {
+        grid.scrollBy({ left: cardWidth(), behavior: 'smooth' });
+      });
+
+      grid.addEventListener('scroll', updateArrows, { passive: true });
+      window.addEventListener('resize', updateArrows);
+
+      updateArrows();
     });
-
-    nextBtn.addEventListener('click', () => {
-      grid.scrollBy({ left: cardWidth(), behavior: 'smooth' });
-    });
-
-    // обновление при скролле пальцем
-    grid.addEventListener('scroll', updateArrows, { passive: true });
-
-    // обновление при ресайзе/повороте экрана
-    window.addEventListener('resize', updateArrows);
-
-    // первичная инициализация
-    updateArrows();
-  });
-</script>
+  </script>
 
 </body>
 </html>
-
