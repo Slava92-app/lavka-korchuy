@@ -216,6 +216,7 @@
         justify-content: center;
       }
 
+      /* фиксируем высоту зоны логотипа */
       header .logo a{
         display: block;
         width: 100%;
@@ -251,6 +252,7 @@
         padding: 6px 0;
       }
 
+      /* состояние при скролле */
       header.is-compact .logo img{
         transform: scale(0.82);
         opacity: 0.96;
@@ -259,16 +261,6 @@
       header.is-compact .logo a{
         margin: 2px auto 6px;
       }
-    }
-
-    @media (max-width: 600px) {
-      .order-container {
-        padding: 24px 16px;
-        background: transparent;
-        box-shadow: none;
-      }
-      h2 { font-size: 24px; }
-      input, select, textarea { background: #fff; }
     }
   </style>
 </head>
@@ -425,3 +417,4 @@
   </script>
 </body>
 </html>
+
