@@ -287,6 +287,39 @@
         padding: 6px 0;
       }
     }
+    /* ===== ЛОГОТИП В ШАПКЕ — ОПТИМИЗИРОВАННЫЙ ПОД МОБИЛУ ===== */
+@media (max-width: 480px) {
+  header .container.nav {
+    align-items: center;
+  }
+
+  header .logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  header .logo a {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  header .logo img {
+    width: 88vw !important;     /* визуально «во всю ширину», но не в край */
+    max-width: 420px !important;/* защита от слишком больших экранов */
+    height: auto !important;
+
+    margin-top: 4px;
+    margin-bottom: 6px;
+  }
+
+  header .menu {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -409,5 +442,6 @@
   </script>
 </body>
 </html>
+
 
 
