@@ -4,9 +4,11 @@
   <meta charset="UTF-8"/>
   <title>Оформить заказ — КОРЧУЙ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
   <link rel="icon" type="image/svg+xml" href="favicon_korchuy.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon_korchuy.png">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon_korchuy.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon_korchuy.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon_korchuy.png"/>
+
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html, body { max-width: 100%; overflow-x: hidden; }
@@ -51,14 +53,10 @@
       align-items: center;
     }
 
-    .logo a {
-      display: block;
-      line-height: 0;
-    }
-
+    .logo a { display: block; line-height: 0; }
     .logo img {
-      height: 80px !important;
-      width: auto !important;
+      height: 80px;
+      width: auto;
       max-width: 200px;
       object-fit: contain;
       vertical-align: middle;
@@ -89,33 +87,6 @@
         gap: 10px;
       }
       .logo img{ height: 56px; }
-    }
-
-    @media (max-width: 480px) {
-      .nav{
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        padding: 10px 0;
-      }
-
-      .logo img{
-        height: 48px;
-      }
-
-      .menu{
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px 14px;
-        justify-content: flex-start;
-        line-height: 1.2;
-      }
-
-      .menu a{
-        font-size: 14px;
-        padding: 6px 0;
-      }
     }
 
     main {
@@ -180,13 +151,6 @@
       box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
     }
 
-    input[readonly] {
-      background-color: #f0f0f0;
-      color: #555;
-      border-color: #ddd;
-      cursor: default;
-    }
-
     textarea {
       resize: vertical;
       min-height: 80px;
@@ -227,6 +191,76 @@
 
     footer a { color: #555; }
 
+    /* ===== FOOTER MOBILE CENTER ===== */
+    @media (max-width: 480px){
+      footer .container{ text-align: center; }
+      footer .container > div{ line-height: 1.6; }
+      footer a{ display: inline-block; margin: 0 6px; }
+    }
+
+    /* =========================================================
+       МОБИЛА: логотип 64px (шапка не растёт) + уменьшение при скролле
+       ========================================================= */
+    @media (max-width: 480px) {
+      .nav{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px 0;
+      }
+
+      .logo{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      header .logo a{
+        display: block;
+        width: 100%;
+        max-width: 92vw;
+        height: 64px;
+        margin: 6px auto 8px;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      header .logo img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+
+        transform-origin: center top;
+        transition: transform 160ms ease, opacity 160ms ease;
+      }
+
+      .menu{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 14px;
+        padding-bottom: 6px;
+      }
+
+      .menu a{
+        white-space: nowrap;
+        font-size: 14px;
+        padding: 6px 0;
+      }
+
+      header.is-compact .logo img{
+        transform: scale(0.82);
+        opacity: 0.96;
+      }
+
+      header.is-compact .logo a{
+        margin: 2px auto 6px;
+      }
+    }
+
     @media (max-width: 600px) {
       .order-container {
         padding: 24px 16px;
@@ -236,92 +270,6 @@
       h2 { font-size: 24px; }
       input, select, textarea { background: #fff; }
     }
-
-    /* ===== FOOTER MOBILE CENTER (добавлено) ===== */
-    @media (max-width: 480px){
-      footer .container{
-        text-align: center;
-      }
-      footer .container > div{
-        line-height: 1.6;
-      }
-      footer a{
-        display: inline-block;
-        margin: 0 6px;
-      }
-    }
-
-    /* ===== Мобильный пресет: ТОЛЬКО ТЕЛЕФОН ===== */
-    @media (max-width: 480px) {
-      .nav {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 10px 0;
-      }
-
-      .logo {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-      }
-
-      .logo img {
-        height: 72px;
-        max-width: 90vw;
-      }
-
-      .menu {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px 14px;
-        padding-bottom: 6px;
-      }
-
-      .menu a {
-        white-space: nowrap;
-        font-size: 14px;
-        padding: 6px 0;
-      }
-    }
-    /* ===== ЛОГОТИП В ШАПКЕ — ОПТИМИЗИРОВАННЫЙ ПОД МОБИЛУ ===== */
-@media (max-width: 480px) {
-  header .container.nav {
-    align-items: center;
-  }
-
-  header .logo {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  header .logo a {
-    display: block;
-    width: 100%;
-    text-align: center;
-  }
-
-  @media (max-width: 480px) {
-  header .logo img {
-    width: 88vw !important;
-    max-width: 420px !important;
-
-    max-height: 64px;   /* 🔑 ключевой параметр */
-    height: auto;
-
-    object-fit: contain;
-  }
-
-  header .menu {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
   </style>
 </head>
 <body>
@@ -330,7 +278,7 @@
     <div class="container nav">
       <div class="logo">
         <a href="index.html">
-          <img src="img/logo-korchuy.png" alt="КОРЧУЙ" style="height: 80px; width: auto;"
+          <img src="img/logo-korchuy.png" alt="КОРЧУЙ"
                onerror="this.style.display='none'; document.querySelector('.logo a').innerText='КОРЧУЙ'">
         </a>
       </div>
@@ -421,6 +369,7 @@
   </footer>
 
   <script>
+    // логика выбора товара из query параметра — как было
     (function(){
       function getParam(name){
         const params = new URLSearchParams(window.location.search);
@@ -441,10 +390,38 @@
         alert(`Спасибо, ${obj.name}! Ваш заказ на "${obj.item || 'товар'}" принят в обработку.`);
       });
     })();
+
+    // ===== Логотип: уменьшение при скролле (только мобила) =====
+    (function () {
+      const header = document.querySelector('header');
+      const mq = window.matchMedia('(max-width: 480px)');
+      if (!header) return;
+
+      let ticking = false;
+
+      function setCompact() {
+        if (!mq.matches) {
+          header.classList.remove('is-compact');
+          ticking = false;
+          return;
+        }
+
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        header.classList.toggle('is-compact', y > 20);
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(setCompact);
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', setCompact);
+
+      setCompact();
+    })();
   </script>
 </body>
 </html>
-
-
-
-
