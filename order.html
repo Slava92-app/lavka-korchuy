@@ -206,8 +206,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 10px 0;
+    gap: 6px;
+    padding: 8px 0;
   }
 
   .logo{
@@ -216,27 +216,30 @@
     justify-content: center;
   }
 
-  /* фиксируем высоту зоны логотипа */
+  /* фиксируем высоту зоны логотипа (шапка НЕ растёт) */
   header .logo a{
     width: 100%;
     max-width: 92vw;
-    height: 72px;
-    margin: 6px auto 8px;
+    height: 72px;         
+    margin: 4px auto;
     overflow: hidden;
 
-    display: flex;              /* 🔑 центрируем содержимое */
+    display: flex;
     align-items: center;
     justify-content: center;
   }
 
+  /* сам логотип делаем "крупнее" без роста шапки */
   header .logo img{
-    height: 100%;
-    width: auto;                 /* сохраняем пропорции */
+    height: 64px;
+    width: auto;
     max-width: 100%;
     object-fit: contain;
     display: block;
 
-    transform-origin: center top;
+    transform: scale(1.25);          /* ✅ визуально больше */
+    transform-origin: center;
+
     transition: transform 160ms ease, opacity 160ms ease;
   }
 
@@ -257,17 +260,11 @@
 
   /* состояние при скролле */
   header.is-compact .logo img{
-    transform: scale(0.82);
+    transform: scale(1);   /* ✅ уменьшаем до "нормы" */
     opacity: 0.96;
   }
-
-  header.is-compact .logo a{
-    margin: 6px auto 12px;
-  }
 }
-
-    
-  </style>
+    </style>
 </head>
 <body>
 
@@ -422,6 +419,7 @@
   </script>
 </body>
 </html>
+
 
 
 
