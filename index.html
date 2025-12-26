@@ -170,8 +170,25 @@
       display: block;
     }
 
-    .product-image img:hover {
-      transform: scale(1.08);
+    /* Плавность (по желанию) */
+.product-image img{
+  transition: transform 200ms ease;
+}
+
+/* Zoom только для устройств с мышью/трекпадом */
+@media (hover: hover) and (pointer: fine){
+  .product-image img:hover{
+    transform: scale(1.08);
+  }
+}
+
+/* На тач-устройствах (iPhone/Android) принудительно без зума */
+@media (hover: none){
+  .product-image img{
+    transform: none !important;
+  }
+}
+
     }
 
     .price {
@@ -536,6 +553,7 @@
   </script>
 </body>
 </html>
+
 
 
 
