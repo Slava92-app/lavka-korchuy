@@ -256,8 +256,31 @@
     opacity: 0.95;
   }
 }
+/* ===== Toast (красивое сообщение вместо alert) ===== */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  background: rgba(17,17,17,0.92);
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.3;
+  max-width: min(92vw, 520px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+  z-index: 9999;
+}
 
-    </style>
+.toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+ </style>
 </head>
 <body>
 
@@ -356,27 +379,66 @@
   </footer>
 
   <script>
-    // логика выбора товара из query параметра — как было
-    (function(){
-      function getParam(name){
-        const params = new URLSearchParams(window.location.search);
-        return params.get(name) || '';
+    <script>
+  (function(){
+    function getParam(name){
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name) || '';
+    }
+
+    // Подставляем товар из query как было
+    const item = decodeURIComponent(getParam('item') || '');
+    const itemInput = document.getElementById('itemInput');
+    if(item && itemInput) itemInput.value = item;
+
+    // ===== Красивый toast вместо alert =====
+    function showToast(text){
+      let toast = document.querySelector('.toast');
+      if (!toast){
+        toast = document.createElement('div');
+        toast.className = 'toast';
+        document.body.appendChild(toast);
       }
+      toast.textContent = text;
+      toast.classList.add('is-visible');
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => toast.classList.remove('is-visible'), 2600);
+    }
 
-      const item = decodeURIComponent(getParam('item') || '');
-      const itemInput = document.getElementById('itemInput');
+    const form = document.getElementById('orderForm');
+    if(!form) return;
 
-      if(item && itemInput){
-        itemInput.value = item;
+    form.addEventListener('submit', async function(e){
+      e.preventDefault(); // ✅ не даём браузеру уходить на ответ Formspree
+
+      const data = new FormData(form);
+      const obj = Object.fromEntries(data.entries());
+      console.log('Данные заказа:', obj);
+
+      try{
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' } // ✅ важно для Formspree
+        });
+
+        if(res.ok){
+          showToast(`Спасибо, ${obj.name || ''}! Заказ принят ✅`);
+          form.reset();
+
+          // если хочешь, можно оставить выбранный товар после reset:
+          if(item && itemInput) itemInput.value = item;
+
+        } else {
+          showToast('Не удалось отправить заявку. Попробуй ещё раз.');
+        }
+      } catch(err){
+        showToast('Сеть/интернет шалит. Попробуй ещё раз.');
       }
+    });
+  })();
+</script>
 
-      document.getElementById('orderForm')?.addEventListener('submit', function(e){
-        const data = new FormData(this);
-        const obj = Object.fromEntries(data.entries());
-        console.log('Данные заказа:', obj);
-        alert(`Спасибо, ${obj.name}! Ваш заказ на "${obj.item || 'товар'}" принят в обработку.`);
-      });
-    })();
 
     // ===== Логотип: уменьшение при скролле (только мобила) =====
     (function () {
@@ -412,6 +474,7 @@
   </script>
 </body>
 </html>
+
 
 
 
