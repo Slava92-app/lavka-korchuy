@@ -377,99 +377,106 @@
       </div>
     </div>
   </footer>
+<script>
+(function(){
+  // ===== Подстановка товара из query =====
+  const itemInput = document.getElementById('itemInput');
+  const itemParam = new URLSearchParams(window.location.search).get('item'); // уже декодировано
+  const item = (itemParam || '').trim();
 
-  <script>
-  (function(){
-    function getParam(name){
-      const params = new URLSearchParams(window.location.search);
-      return params.get(name) || '';
+  if (item && itemInput) {
+    const options = Array.from(itemInput.options);
+
+    const match = options.find(o =>
+      (o.value || '').trim() === item ||
+      (o.textContent || '').trim() === item
+    );
+
+    if (match) itemInput.value = match.value;
+  }
+
+  // ===== Toast вместо alert =====
+  function showToast(text){
+    let toast = document.querySelector('.toast');
+    if (!toast){
+      toast = document.createElement('div');
+      toast.className = 'toast';
+      document.body.appendChild(toast);
     }
+    toast.textContent = text;
+    toast.classList.add('is-visible');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove('is-visible'), 2600);
+  }
 
-    // Подставляем товар из query как было
-    const item = decodeURIComponent(getParam('item') || '');
-    const itemInput = document.getElementById('itemInput');
-    if(item && itemInput) itemInput.value = item;
+  // ===== Отправка формы без "страшного" ответа Formspree =====
+  const form = document.getElementById('orderForm');
+  if(!form) return;
 
-    // ===== Красивый toast вместо alert =====
-    function showToast(text){
-      let toast = document.querySelector('.toast');
-      if (!toast){
-        toast = document.createElement('div');
-        toast.className = 'toast';
-        document.body.appendChild(toast);
-      }
-      toast.textContent = text;
-      toast.classList.add('is-visible');
-      clearTimeout(showToast._t);
-      showToast._t = setTimeout(() => toast.classList.remove('is-visible'), 2600);
-    }
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
 
-    const form = document.getElementById('orderForm');
-    if(!form) return;
+    const data = new FormData(form);
+    const obj = Object.fromEntries(data.entries());
 
-    form.addEventListener('submit', async function(e){
-      e.preventDefault(); // ✅ не даём браузеру уходить на ответ Formspree
+    try{
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
 
-      const data = new FormData(form);
-      const obj = Object.fromEntries(data.entries());
-      console.log('Данные заказа:', obj);
+      if(res.ok){
+        showToast(`Спасибо, ${obj.name || ''}! Заказ принят ✅`);
+        form.reset();
 
-      try{
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' } // ✅ важно для Formspree
-        });
-
-        if(res.ok){
-          showToast(`Спасибо, ${obj.name || ''}! Заказ принят ✅`);
-          form.reset();
-
-          // если хочешь, можно оставить выбранный товар после reset:
-          if(item && itemInput) itemInput.value = item;
-
-        } else {
-          showToast('Не удалось отправить заявку. Попробуй ещё раз.');
-        }
-      } catch(err){
-        showToast('Сеть/интернет шалит. Попробуй ещё раз.');
-      }
-    });
-  })();
-// ===== Логотип: уменьшение при скролле (только мобила) =====
-    (function () {
-      const header = document.querySelector('header');
-      const mq = window.matchMedia('(max-width: 600px)');
-      if (!header) return;
-
-      let ticking = false;
-
-      function setCompact() {
-        if (!mq.matches) {
-          header.classList.remove('is-compact');
-          ticking = false;
-          return;
+        // после reset возвращаем выбранный товар
+        if (item && itemInput) {
+          const options = Array.from(itemInput.options);
+          const match = options.find(o => (o.value || '').trim() === item);
+          if (match) itemInput.value = match.value;
         }
 
-        const y = window.scrollY || document.documentElement.scrollTop || 0;
-        header.classList.toggle('is-compact', y > 20);
-        ticking = false;
+      } else {
+        showToast('Не удалось отправить заявку. Попробуй ещё раз.');
       }
+    } catch(err){
+      showToast('Сеть/интернет шалит. Попробуй ещё раз.');
+    }
+  });
 
-      function onScroll() {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(setCompact);
-      }
+  // ===== Логотип: уменьшение при скролле (только мобила) =====
+  const header = document.querySelector('header');
+  const mq = window.matchMedia('(max-width: 480px)');
+  if (!header) return;
 
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', setCompact);
+  let ticking = false;
 
-      setCompact();
-    })();
-  </script>
+  function setCompact() {
+    if (!mq.matches) {
+      header.classList.remove('is-compact');
+      ticking = false;
+      return;
+    }
+    const y = window.scrollY || document.documentElement.scrollTop || 0;
+    header.classList.toggle('is-compact', y > 20);
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(setCompact);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', setCompact);
+  setCompact();
+})();
+</script>
 </body>
 </html>
+
 
 
 
