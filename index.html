@@ -286,79 +286,62 @@
     }
 
     /* =========================================================
-       МОБИЛА: логотип 64px (шапка не растёт) + уменьшение при скролле
-       ========================================================= */
-    @media (max-width: 480px) {
-      .nav{
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 10px 0;
-      }
+   МОБИЛА: увеличенный логотип БЕЗ роста шапки
+   ========================================================= */
+@media (max-width: 480px) {
 
-      .logo{
-        width: 100%;
-        display: flex;
-        justify-content: center;
-      }
-
-      /* фиксируем высоту зоны логотипа */
-      header .logo a{
-        display: block;
-        width: 100%;
-        max-width: 96vw;
-        height: 72px;
-        margin: 6px auto 8px;
-        overflow: hidden;
-        text-align: center;
-      }
-
-      header .logo img{
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        display: block;
-
-        transform-origin: center top;
-        transition: transform 160ms ease, opacity 160ms ease;
-      }
-
-      .menu{
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px 14px;
-        padding-bottom: 6px;
-      }
-
-      .menu a{
-        white-space: nowrap;
-        font-size: 14px;
-        padding: 6px 0;
-      }
-
-      /* состояние при скролле */
-      header.is-compact .logo img{
-        transform: scale(0.82);
-        opacity: 0.96;
-      }
-
-      header.is-compact .logo a{
-        margin: 6px auto 12px;
-      }
-    }
-    @media (max-width: 520px){
-  header .logo {
-    width: 150%;
-    justify-content: center; /* на всякий случай */
+  .nav{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 0;
   }
 
+  .logo{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* фиксированная зона логотипа */
   header .logo a{
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 64px;        /* ← шапка НЕ растёт */
+    width: 100%;
+    max-width: 92vw;
+
+    margin: 4px auto;
+    overflow: hidden;
+  }
+
+  /* визуальное увеличение логотипа */
+  header .logo img{
+    height: 64px;
+    width: auto;
+
+    transform: scale(1.25);   /* ← меняй здесь размер */
+    transform-origin: center;
+
+    transition: transform 160ms ease, opacity 160ms ease;
+  }
+
+  .menu{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 14px;
+    padding-bottom: 6px;
+  }
+
+  /* уменьшение при скролле */
+  header.is-compact .logo img{
+    transform: scale(1);
+    opacity: 0.95;
   }
 }
 
@@ -551,6 +534,7 @@
   </script>
 </body>
 </html>
+
 
 
 
